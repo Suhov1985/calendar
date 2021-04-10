@@ -2,9 +2,13 @@
   <section class="сalendar-wrap">
     <div class="container">
       <div class="actions">
-        <button class="primary" @click="getPrevMonth">Prev</button>
+        <button @click="getPrevMonth">
+          <span class="icon left"></span>
+        </button>
         <b>{{monthNames[curMonth.day.getMonth()] + ' ' + curMonth.day.getFullYear()}}</b>
-        <button class="primary" @click="getNextMonth">Next</button>
+        <button @click="getNextMonth">
+          <span class="icon right"></span>
+        </button>
       </div>
       <div class="calendar">
         <div class="day" v-for="(day, index) in cells" :key="index" :class="{'today': isToday((day+1) - curMonth.dayNumFirst)}">
@@ -145,10 +149,29 @@ export default {
 <style scoped lang="sass">
 .сalendar-wrap
   padding: 1.25rem 0
+  b
+    margin: 0 0.625rem
+  .actions
+    margin-bottom: 1rem
+    button
+      background: transparent
+      border: 1px solid #dfdfdf
+      padding: 5px
+      font-size: 0
+    .icon
+      display: inline-flex
+      width: 5px
+      height: 5px
+      background: url("../../public/img/angle-right.svg") center no-repeat
+      background-size: cover
+      &.left
+        transform: rotate(180deg)
+
 .calendar
   display: grid
   grid-template-columns: repeat(7, minmax(9.375rem, 1fr))
   grid-gap: 0
+
   .day
     width: 100%
     height: 9.375rem
