@@ -1,11 +1,17 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from "vue"
+import Vuex from "vuex"
+import commonData from "./common"
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {},
+  state: {
+    curMonth: null,
+    daysInCurMonth: null,
+  },
   mutations: {},
   actions: {},
-  modules: {},
-});
+  modules: {
+    commonData
+  },
+})
