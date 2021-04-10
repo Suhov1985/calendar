@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("path")
 
 module.exports = {
   css: {
@@ -13,15 +13,16 @@ module.exports = {
       alias: {
         "@": __dirname,
         "~": __dirname,
-        assets: path.resolve(__dirname, "./assets"),
-        public: path.resolve(__dirname, "./public"),
+        "assets": path.resolve(__dirname, "./assets"),
+        "public": path.resolve(__dirname, "./public"),
       },
     },
   },
-  chainWebpack: (config) => {
-    config.plugin("html").tap((args) => {
-      args[0].title = "Your new title";
-      return args;
-    });
+  chainWebpack: config => {
+    config.plugin("html").tap(args => {
+      args[0].title = "Calendar"
+
+      return args
+    })
   },
-};
+}

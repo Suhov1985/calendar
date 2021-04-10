@@ -1,17 +1,22 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="src/assets/img/logo.png" />
-    <Card />
+    <BaseHeader />
+    <BaseCalendar />
+    <BaseCard />
   </div>
 </template>
 
 <script>
-import Card from "./components/card"
+import BaseHeader from "./components/BaseHeader"
+import BaseCalendar from "./components/BaseCalendar"
+import BaseCard from "./components/BaseCard"
 
 export default {
   name: "App",
   components: {
-    Card,
+    BaseCard,
+    BaseHeader,
+    BaseCalendar,
   },
 }
 </script>

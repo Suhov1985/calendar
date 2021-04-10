@@ -1,10 +1,12 @@
 export default {
+  namespaced: true,
   state: () => ({
-    event: null
+    monthShift: 0,
+    event: null,
   }),
   mutations: {
-    setEvent (state, data) {
-      state.event = data
+    setMonthShift (state, shift) {
+      state.monthShift = shift
     },
   },
   actions: {}

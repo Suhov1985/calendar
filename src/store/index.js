@@ -1,6 +1,6 @@
 import Vue from "vue"
 import Vuex from "vuex"
-import commonData from "./common"
+import common from "./common"
 
 Vue.use(Vuex)
 
@@ -12,6 +12,6 @@ export default new Vuex.Store({
   mutations: {},
   actions: {},
   modules: {
-    commonData
+    common
   },
 })
