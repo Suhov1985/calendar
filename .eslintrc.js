@@ -79,6 +79,7 @@ module.exports = {
     'vue/require-name-property': 2,
     'vue/v-on-function-call': [1, 'never'],
     'vue/static-class-names-order': 1,
+    'vue/no-unused-components': 0,
     'vue/no-v-html': 0,
     'no-var': 1,
     'no-unused-vars': 0,

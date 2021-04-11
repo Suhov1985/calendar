@@ -2,11 +2,35 @@ export default {
   namespaced: true,
   state: () => ({
     monthShift: 0,
-    event: null,
+    events: [],
+    activeYear: null,
+    activeMonth: null,
+    editeWindow: null,
   }),
   mutations: {
     setMonthShift (state, shift) {
       state.monthShift = shift
+    },
+    addEvent (state, event) {
+      state.events.push(event)
+      localStorage.setItem('events', JSON.stringify(state.events))
+    },
+    loadLocalEvent (state, events) {
+      state.events = events
+    },
+    setActiveYear (state, year) {
+      state.activeYear = year
+    },
+    setActiveMonth (state, month) {
+      state.activeMonth = month
+    },
+    setEditeWindow (state, data) {
+      state.editeWindow = data
+    },
+    closeEditeWindow (state, id) {
+      if(state.editeWindow !== null) {
+        state.editeWindow = id ? id : null
+      }
     },
   },
   actions: {}

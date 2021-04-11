@@ -1,22 +1,23 @@
 <template>
-  <div id="app">
+  <div id="app" @click="closeEditeWindow">
     <BaseHeader />
-    <BaseCalendar />
-    <BaseCard />
+    <BaseCalendar  />
   </div>
 </template>
 
 <script>
 import BaseHeader from "./components/BaseHeader"
 import BaseCalendar from "./components/BaseCalendar"
-import BaseCard from "./components/BaseCard"
+import {mapMutations} from "vuex"
 
 export default {
   name: "App",
   components: {
-    BaseCard,
     BaseHeader,
     BaseCalendar,
+  },
+  methods: {
+    ...mapMutations('common', ['closeEditeWindow']),
   },
 }
 </script>
