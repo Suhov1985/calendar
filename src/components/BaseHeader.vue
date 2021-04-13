@@ -12,7 +12,7 @@
             <img src="../../public/img/search.png" alt="Icon">
           </div>
           <input type="text" v-model="searchText">
-          <div class="search-list" v-if="showFindList">
+          <div class="search-list" v-if="showFindList && searchWindow" v-click-outside="closePopup">
             <div class="search-item" v-for="(event, index) in findList" :key="index" @click="searchText = ''">
               <div class="search-title">{{event.name}}</div>
               <div class="search-date" v-if="event.date">{{getUserDate(event.date)}}</div>
@@ -26,7 +26,7 @@
 
 <script>
 import FastAddEvent from "./FastAddEvent"
-import {mapState} from "vuex"
+import {mapActions, mapState} from "vuex"
 export default {
   name: "BaseHeader",
   props: {
@@ -47,7 +47,7 @@ export default {
   created () {
   },
   computed: {
-    ...mapState('common', ['events']),
+    ...mapState('common', ['events', 'searchWindow']),
     // Filter find events
     findList() {
       let events = this.searchText ? this.events.concat() : []
@@ -57,10 +57,12 @@ export default {
   watch: {
     // Watching var and show or hide list with results
     'findList'(val) {
+      this.toggleSearchWindow(val.length > 0)
       this.showFindList = val.length > 0
     }
   },
   methods: {
+    ...mapActions('common', ['toggleSearchWindow']),
     // Delete events and active calendar from vuex and store
     update() {
       localStorage.removeItem('events')
@@ -73,6 +75,9 @@ export default {
     },
     isShowFastAddEvent(e) {
       this.showFastAddEvent = e
+    },
+    closePopup() {
+      this.toggleSearchWindow(false)
     }
   },
 }
@@ -108,6 +113,8 @@ export default {
     background: #fff
     box-shadow: 0px 10px 10px 2px rgba(34, 60, 80, 0.2)
     margin-top: 1.25rem
+    max-height: 18.75rem
+    overflow: auto
     &:after
       content: ''
       width: 0

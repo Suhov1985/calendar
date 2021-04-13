@@ -1,5 +1,5 @@
 <template>
-  <div id="app" @click="closeEditeWindow">
+  <div id="app">
     <BaseHeader />
     <BaseCalendar  />
   </div>
@@ -8,7 +8,6 @@
 <script>
 import BaseHeader from "./components/BaseHeader"
 import BaseCalendar from "./components/BaseCalendar"
-import {mapMutations} from "vuex"
 
 export default {
   name: "App",
@@ -16,9 +15,7 @@ export default {
     BaseHeader,
     BaseCalendar,
   },
-  methods: {
-    ...mapMutations('common', ['closeEditeWindow']),
-  },
+
 }
 </script>
 

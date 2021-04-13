@@ -6,6 +6,7 @@ export default {
     activeYear: null,
     activeMonth: null,
     editeWindow: null,
+    searchWindow: null,
   }),
   mutations: {
     setMonthShift (state, shift) {
@@ -27,11 +28,15 @@ export default {
     setEditeWindow (state, data) {
       state.editeWindow = data
     },
-    closeEditeWindow (state, id) {
+  },
+  actions: {
+    closeEditWindow ({ state }, id) {
       if(state.editeWindow !== null) {
         state.editeWindow = id ? id : null
       }
     },
-  },
-  actions: {}
+    toggleSearchWindow ({ state }, data) {
+      state.searchWindow = data
+    },
+  }
 }

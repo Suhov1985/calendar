@@ -7,5 +7,5 @@ Vue.config.productionTip = false
 // eslint-disable-next-line vue/require-name-property
 new Vue({
   store,
-  render: (h) => h(App),
+  render: h => h(App),
 }).$mount("#app")

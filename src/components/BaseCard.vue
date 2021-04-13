@@ -1,5 +1,5 @@
 <template>
-  <div :ref="'card' + id" :class="'card' + ' ' + customClass" @click.stop="" v-if="active !== false">
+  <div id="card" :ref="'card' + id" :class="'card' + ' ' + customClass" v-if="active !== null" v-click-outside="closePopup">
     <div class="title" v-if="event && event.name">{{event.name}}</div>
     <input type="text" v-model="eventName" placeholder="Event Title" v-if="!event || (event && !event.name)">
     <div class="date" v-if="event && event.date">{{getUserDate(event.date)}}</div>
@@ -18,7 +18,9 @@
 </template>
 
 <script>
-import {mapMutations, mapState} from "vuex"
+import {mapMutations, mapActions, mapState} from "vuex"
+
+import clickOutside from '../common/directive'
 
 export default {
   name: "Card",
@@ -57,7 +59,8 @@ export default {
     this.eventDate = (this.curDate.getDate() + ' ' + this.monthNames[this.curDate.getMonth()] + ' ' + this.curDate.getFullYear()).toString()
 
     // Chech position popup
-    let cardPositions = this.$refs['card' + this.id].getBoundingClientRect()
+    const cardPositions = this.$refs['card' + this.id].getBoundingClientRect()
+
     if(+cardPositions.left + +cardPositions.width > window.innerWidth) {
       this.customClass = 'left'
     }
@@ -66,49 +69,59 @@ export default {
     ...mapState('common', ['activeYear', 'activeMonth', 'events']),
   },
   methods: {
-    ...mapMutations('common', ['addEvent', 'closeEditeWindow', 'loadLocalEvent']),
+    ...mapMutations('common', ['addEvent', 'loadLocalEvent']),
+    ...mapActions('common', ['closeEditWindow']),
     // Create new event or update
     createEvent() {
-      let event = {
+      const event = {
         name: this.eventName ? this.eventName : '',
         date: this.curDate ? this.curDate : '',
         names: this.eventNames,
         desc: this.eventDesc,
       }
-      let localEvents = this.events.concat()
-      let eventIndex = this.findEventIndex()
+      const localEvents = this.events.concat()
+      const eventIndex = this.findEventIndex()
+
       if(this.event !== null) {
         localEvents.splice(eventIndex, 1, )
       }
+
       localEvents.push(event)
       this.loadLocalEvent(localEvents)
       localStorage.setItem('events', JSON.stringify(localEvents))
-      this.closeEditeWindow()
+      this.closeEditWindow()
     },
     // Find cur event
     findEventIndex() {
-      let localEvents = this.events.concat()
+      const localEvents = this.events.concat()
       let eventIndex = null
+
       for (let i = 0; i < localEvents.length; i++) {
         const localDate = new Date(localEvents[i].date)
+
         if (localDate.getTime() === this.curDate.getTime()) {
           eventIndex = i
         }
       }
+
       return eventIndex
     },
     // Delete event from store and localStorage
     deleteEvent() {
-      let localEvents = this.events.concat()
-      let eventIndex = this.findEventIndex()
+      const localEvents = this.events.concat()
+      const eventIndex = this.findEventIndex()
+
       localEvents.splice(eventIndex, 1, )
       this.loadLocalEvent(localEvents)
       localStorage.setItem('events', JSON.stringify(localEvents))
-      this.closeEditeWindow()
+      this.closeEditWindow()
     },
     // Get user-friendly name of date
     getUserDate(date) {
       return new Date(date).getDate() + ' ' + this.monthNames[new Date(date).getMonth()]
+    },
+    closePopup() {
+      this.closeEditWindow()
     }
   },
 }
@@ -139,6 +152,18 @@ export default {
     position: absolute
     left: -0.9375rem
     top: 0.9375rem
+
+
+  .close
+    position: absolute
+    top: 0.3125rem
+    right: 0.3125rem
+    cursor: pointer
+    width: 0.625rem
+    height: 0.625rem
+    background: url("../../public/img/close.svg") center no-repeat
+    background-size: cover
+    z-index: 2
 
   &.left
     left: auto

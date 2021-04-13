@@ -44,8 +44,9 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import BaseCard from "./BaseCard"
+import Vue from "vue"
 
 export default {
   name: "BaseCalendar",
@@ -121,14 +122,11 @@ export default {
     },
   },
   methods: {
-    ...mapMutations('common', ['setMonthShift', 'setActiveYear', 'setActiveMonth', 'loadLocalEvent', 'closeEditeWindow', 'setEditeWindow']),
+    ...mapMutations('common', ['setMonthShift', 'setActiveYear', 'setActiveMonth', 'loadLocalEvent', 'setEditeWindow']),
+    ...mapActions('common', ['closeEditWindow']),
     // Activated editeEvent Popup
     showEditeEvent(id) {
-      if(this.editeWindow !== null) {
-        this.closeEditeWindow(id)
-      } else {
-        this.setEditeWindow(id)
-      }
+      this.setEditeWindow(id)
     },
     // Change active month to prev Month
     getPrevMonth(day) {
@@ -275,7 +273,7 @@ export default {
           white-space: nowrap
         .desc
           font-size: 1rem
-          font-weight: bold
+          font-weight: normal
           width: 6.25rem
           overflow: hidden
           text-overflow: ellipsis
